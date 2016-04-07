@@ -1,0 +1,68 @@
+{
+  "minimum-stability": "dev",
+  "config": {
+    "vendor-dir": "vendor/lib"
+  },
+  "repositories": [
+    {
+      "type":"composer",
+      "url":"http://wpackagist.org"
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wordpress",
+        "type": "webroot",
+        "version": "4.1",
+        "dist": {
+          "type": "zip",
+          "url": "https://github.com/WordPress/WordPress/archive/4.1.zip"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wp-bootstrap-hooks",
+        "version": "dev-master",
+        "type": "wordpress-muplugin",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/rexblack/wp-bootstrap-hooks.git",
+          "reference": "master"
+        }
+      }
+    },
+    {
+      "type": "package",
+      "package": {
+        "name": "wp-asset-manifest",
+        "version": "dev-master",
+        "type": "wordpress-muplugin",
+        "source": {
+          "type": "git",
+          "url": "https://github.com/benignware/wp-asset-manifest.git",
+          "reference": "master"
+        }
+      }
+    }
+  ],
+  "require": {
+    "wordpress": "4.1",
+    "wemakecustom/wp-mu-loader": "*",
+    "wp-asset-manifest": "master",
+    "wp-bootstrap-hooks": "master"
+  },
+  "scripts": {
+    "post-autoload-dump": [
+        "php -r \"copy('app/mu-plugins/mu-loader/mu-require.php', 'app/mu-plugins/mu-require.php');\""
+    ]
+  },
+  "extra": {
+    "installer-paths": {
+        "app/plugins/{$name}/": ["type:wordpress-plugin"],
+        "app/mu-plugins/{$name}/": ["type:wordpress-muplugin"],
+        "app/themes/{$name}/": ["type:wordpress-theme"]
+    }
+  }
+}
