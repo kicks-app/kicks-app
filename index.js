@@ -12,6 +12,7 @@ program
   .arguments('<src> [<dest>]')
   .option('-n, --name [name]', "set project name")
   .option('-d, --description [description]', "set project description")
+  .option('-f, --force', "force clean install in a non-empty directory")
   .action(function(src, dest) {
     var
       opts = program.opts();

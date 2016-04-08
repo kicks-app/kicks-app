@@ -37,9 +37,14 @@ module.exports = function install(src, dest, options) {
   });
   
   if (fs.existsSync(dest)) {
-    defer.reject(dest + " exists and is not an empty directory");
-    return defer.promise;
+    if (options.force) {
+      rimraf.sync(dest);
+    } else {
+      defer.reject(dest + " exists and is not an empty directory");
+      return defer.promise;
+    }
   }
+  
   
   clone(src, dest).done(function() {
     // Plugins

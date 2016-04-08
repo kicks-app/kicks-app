@@ -21,5 +21,6 @@ Options:
   -V, --version                    output the version number
   -n, --name [name]                set project name
   -d, --description [description]  set project description
+  -f, --force                      force clean install in a non-empty directory
 
 ```
