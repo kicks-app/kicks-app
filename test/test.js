@@ -6,12 +6,10 @@ describe('Install', function() {
   describe('kicks-app-test', function(done) {
     this.timeout(100000);
     // git://github.com/<user>/<project>.git#<branch>
-    var src = "https://github.com/kicks-app/kicks-app-wordpress.git#bootstrap_4";
-    //var src = "wordpress#bootstrap_4";
+    //var src = "https://github.com/kicks-app/kicks-app-wordpress.git#bootstrap_4";
+    var src = "wordpress#bootstrap_4";
     var dest = 'tmp';
-    
     it('should throw if config does not match expected results', function(done) {
-      console.log("run test: ", src, dest);
       rimraf(dest, function() {
         install(src, {
           name: 'my-project',

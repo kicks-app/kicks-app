@@ -10,46 +10,43 @@ var fs = require('extfs');
 var mkdir = require('mkdirp');
 var sanitize = require("sanitize-filename");
   
-module.exports = function install(src, options) {
+module.exports = function install(src, dest, options) {
+  
+  options = typeof dest === 'object' ? dest : options || {};
+  dest = typeof dest === 'object' ? options.dest || path.basename(options.name) : dest;
+  
   var defer = Q.defer();
   var cwd = process.cwd();
-  var dest = options.dest;
-  var name = options.name;
+ 
   
   if (!dest && options.name && !fs.isEmptySync(cwd)) {
     dest = cwd + "/" + options.name;
   }
+
+  if (!dest) {
+    dest = cwd;
+  }
+  
+  var name = typeof options.name === 'string' && options.name || path.basename(dest);
+  
+  src = resolve(src);
+
+  options = merge(options, {
+    version: '0.0.1',
+    name: name
+  });
   
   if (fs.existsSync(dest)) {
     defer.reject(dest + " exists and is not an empty directory");
     return defer.promise;
   }
   
-  if (dest && options.name && !fs.existsSync(options.name) && !fs.isEmptySync(cwd)) {
-    mkdir.sync(sanitize(dest));
-  }
-  
-  if (!dest) {
-    dest = cwd;
-  }
-  
-  
-  src = resolve(src);
-  
-  options = merge({
-    dest: dest,
-    name: path.basename(options.name || dest),
-    version: '0.0.1',
-    description: ''
-  }, options);
-    
-  
   clone(src, dest).done(function() {
     // Plugins
     glob(path.join(__dirname,'.', 'installers', '*.js')).map(function(file) {
       return require('./installers/' + path.basename(file, path.extname(file)) + '.js');
     }).forEach(function(plugin) {
-      plugin(options);
+      plugin(dest, options);
     });
     defer.resolve();
   });
@@ -73,7 +70,7 @@ function copy(src, dest, callback) {
 function clone(src, dest) {
   var
     defer = Q.defer(),
-    branch = src.match(/#(.*)$/)[1] || "master",
+    branch = src.indexOf('#') >= 0 && src.match(/#(.*)$/)[1] || "master",
     url = src.replace(/#.*/, "") || src,
     cloneOptions = new nodegit.CloneOptions(),
     twirlTimer = (function() {
@@ -114,7 +111,7 @@ function resolve(src) {
       console.log("TODO: Copy local files");
     } else if (path.basename(src) === src) {
       // Could be kicks-app
-      branch = src.match(/#(.*)$/)[1],
+      branch = src.indexOf('#') >= 0 && src.match(/#(.*)$/)[1],
       name = src.replace(/#.*/, "") || src,
       src = "https://github.com/kicks-app/kicks-app-" + name + ".git" + (branch ? "#" + branch : "");
     }

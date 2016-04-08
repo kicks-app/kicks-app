@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "chalk": "^0.5.1",
-    "commander": "~2.6.0",
+    "commander": "^2.9.0",
     "deepmerge": "^0.2.7",
     "extfs": "0.0.7",
     "fsext": "0.0.6",
