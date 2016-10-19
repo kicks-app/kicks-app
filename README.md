@@ -1,16 +1,18 @@
-# kicks-app-cli
+# kicks-app
 Install project templates from the command line
 
+KicksApp's command line tool lets you download a project template to a local folder and automatically replace project title and other individual data in common places like package.json   
+
 ## Install
-Since kicks-app-cli is still under development and not available via npm, you need to install it manually:
+KicksApp CLI is still under development and not available via npm, so you need to install it manually from source directory 
 
 ```cli
-git clone https://github.com/kicks-app/kicks-app-cli.git ./kicks-app-cli
-npm install ./kicks-app-cli
+npm i . -g
 ```
 
 ## Usage
-Enter `kicks-app -h` to see arguments and options
+
+Enter `kicks-app -h` to see a list of arguments and options
 
 ```cli
 Usage: kicks-app [options] <src> [<dest>]
@@ -24,3 +26,17 @@ Options:
   -f, --force                      force clean install in a non-empty directory
 
 ```
+
+Download an application template by kicks-app to the current working directory
+
+```
+kicks-app wordpress -t 'my-project' -d 'My Project'
+```
+
+Download a repository to a local folder
+
+```cli
+kicks-app https://github.com/kicks-app/kicks-app-wordpress.git my-project -d 'My Project'
+```
+
+Note that the destination directory should either not exist or be empty. To do it anyway, you can use the `--force`-option.

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var install = require('./install');
+var install = require('./lib/install');
 
 var path = require('path');
 var fs = require('fs');

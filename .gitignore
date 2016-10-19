@@ -37,3 +37,6 @@ tmp
 
 # Eclipse
 .project
+
+# GFM Preview
+.README.md.html
