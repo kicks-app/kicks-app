@@ -4,7 +4,10 @@ Install project templates from the command line
 KicksApp's command line tool lets you download a project template to a local folder and automatically replace project title and other individual data in common places like package.json   
 
 ## Install
-KicksApp CLI is still under development and not available via npm, so you need to install it manually from source directory 
+
+For the command line tool to work, you need [nodejs](https://nodejs.org) installed on your machine.
+
+KicksApp CLI is still under development and not available via npm, so you need to clone this repository and install it manually from the source directory.
 
 ```cli
 npm i . -g
