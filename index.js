@@ -12,12 +12,25 @@ program
   .arguments('<src> [<dest>]')
   .option('-n, --name [name]', "set project name")
   .option('-d, --description [description]', "set project description")
-  .option('-f, --force', "force clean install in a non-empty directory")
   .action(function(src, dest) {
     var
-      opts = program.opts();
-    install(src, dest, opts).done(function() {
-      console.log("\nDone.");
-    })
+      opts = (function (program) {
+        // Get cli options
+        var
+          result = {};
+          keys = program.options.map( function (option) { return option.long.replace(/^-+/, "")});
+          Object.keys(program)
+            .filter( function (key) { return keys.indexOf(key) >= 0; })
+            .forEach( function(key) {
+              result[key] = program[key];
+            });
+          return result;
+      })(program)
+    install(src, dest, opts)
+      .then(function() {
+        console.log("Done.");
+      }, function(err) {
+        console.error("Error:", err);
+      });
   })
   .parse(process.argv);
