@@ -15,6 +15,8 @@ npm i . -g
 
 ## Usage
 
+KicksApp works similar to `git clone`, but with different options.
+
 Enter `kicks-app -h` to see a list of arguments and options
 
 ```cli
